@@ -1,6 +1,47 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { GlobalContext } from "../context";
+
+const colors = ["#6a097d", "#c060a1", "#5c969e", "#3d7ea6"];
+
+const CustomInput = ({ value, onClick }) => {
+  return (
+    <span
+      style={{
+        border: `1px solid gray`,
+        padding: `1rem`,
+        cursor: "pointer",
+        margin: "5px 0",
+      }}
+      onClick={onClick}
+    >
+      {value}
+    </span>
+  );
+};
 
 export default function ReminderModal({ setShowModal }) {
+  const [title, setTitle] = useState("");
+  const [colorSelected, setColorSelected] = useState(colors[0]);
+  const [date, setDate] = useState(new Date());
+  const { reminders, setReminders, setFilteredReminders } = useContext(
+    GlobalContext
+  );
+
+  function handleSave() {
+    const reminder = {
+      title,
+      date: date.getTime(),
+      color: colorSelected,
+    };
+    const newReminders = [...reminders, reminder];
+    setReminders(newReminders);
+    localStorage.setItem("reminders", JSON.stringify(newReminders));
+    setFilteredReminders(newReminders);
+    setShowModal(false);
+  }
+
   return (
     <div className="modal">
       <div className="addReminder">
@@ -13,25 +54,9 @@ export default function ReminderModal({ setShowModal }) {
             <i className="fas fa-times" />
           </button>
         </div>
+
         <form className="addReminder__contentBox">
           <div className="addReminder__dateTimeBox">
-            <label htmlFor="date" />
-            <input
-              className="addReminder__date"
-              type="date"
-              id="date"
-              name="date"
-              defaultValue=" "
-              placeholder="mm dd,yyyy"
-            />
-            <label htmlFor="time" />
-            <input
-              className="addReminder__time"
-              type="time"
-              id="time"
-              name="time"
-              required
-            />
             <div className="weather">
               <img className="weather__image" src="#" alt="weather" />
               <p className="weather__degrees">24</p>
@@ -47,22 +72,16 @@ export default function ReminderModal({ setShowModal }) {
               type="text"
               placeholder="Add title to your reminder"
               maxLength={30}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
-            <select
-              id="dropdown"
-              name="frecuency"
-              className="addReminder__frecuency"
-              required
-            >
-              <option selected value="Daily">
-                Daily
-              </option>
-              <option value="Weekdays">Weekdays(Mon-Fri)</option>
-              <option value="Weekly">Weekly(every "Friday")</option>
-              <option value="Monthly">Monthly (third Friday)</option>
-              <option value="Monthly">Monthly (same date)</option>
-              <option value="Yearly">Yearly (every "14 Oct")</option>
-            </select>
+            <DatePicker
+              showTimeInput
+              selected={date}
+              onChange={(date) => setDate(date)}
+              customInput={<CustomInput />}
+              dateFormat="MMMM d, yyyy h:mm aa"
+            />
             <label htmlFor="city" />
             <input
               className="addReminder__city"
@@ -72,13 +91,22 @@ export default function ReminderModal({ setShowModal }) {
             />
             <div className="colorPickerBar">
               <p className="colorPickerBar__title">Select a color</p>
-              <button className="colorPickerBar__color" />
-              <button className="colorPickerBar__color" />
-              <button className="colorPickerBar__color" />
+              {colors.map((item, i) => (
+                <span
+                  onClick={() => setColorSelected(item)}
+                  className={`colorPickerBar__color ${
+                    colorSelected === item ? "active" : ""
+                  }`}
+                  key={i}
+                  style={{ backgroundColor: item }}
+                />
+              ))}
             </div>
           </div>
         </form>
-        <button className="addReminder__saveButton">Save Reminder</button>
+        <button onClick={handleSave} className="addReminder__saveButton">
+          Save Reminder
+        </button>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import logo from "./logo.svg";
 import "./App.scss";
 import Day from "./components/Day";
 import CalendarHeader from "./components/CalendarHeader";
@@ -89,7 +88,7 @@ function App() {
           </section>
         </main>
       </div>
-      {showModal ? <ReminderModal setShowModal={setShowModal} /> : null}
+      {showModal && <ReminderModal setShowModal={setShowModal} />}
     </div>
   );
 }
