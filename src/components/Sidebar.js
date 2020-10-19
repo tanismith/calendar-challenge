@@ -29,16 +29,11 @@ export default function Sidebar() {
         <h2 className="sideBar__title">Filter by:</h2>
         <div
           onClick={() => handleFilter("all")}
-          className={colorSelected === "all" ? "active" : ""}
-          style={{
-            backgroundColor: "pink",
-            textAlign: "center",
-            padding: "5px",
-            borderRadius: "15px",
-            cursor: "pointer",
-          }}
+          className={`sideBar__showAallButton ${
+            colorSelected === "all" ? "active" : ""
+          }`}
         >
-          Show me all
+          Show all
         </div>
         <span className="sideBar__boxForColors">
           {uniqueColors.map((item, i) => (

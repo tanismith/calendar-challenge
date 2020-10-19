@@ -137,7 +137,7 @@ export default function ReminderModal({ setShowModal, reminder }) {
           </button>
         </div>
 
-        <form className="addReminder__contentBox" onSubmit={handleSave}>
+        <form onSubmit={handleSave}>
           <div className="addReminder__reminderContent">
             <label htmlFor="titlereminder" />
             <input
@@ -170,35 +170,40 @@ export default function ReminderModal({ setShowModal, reminder }) {
                 />
               ))}
             </div>
-            <label htmlFor="city" />
-            <input
-              className="addReminder__city"
-              type="text"
-              id="city"
-              value={citySearch}
-              onChange={(e) => {
-                setCitySearch(e.target.value);
-              }}
-              placeholder="Select a city"
-            />
-            {citySearchResults.length > 0 && (
-              <select
-                className="addReminder__selectBox"
-                value={setSelectedCity.id}
-                onChange={(e) =>
-                  setSelectedCity(
-                    citySearchResults.find((item) => item.id === e.target.value)
-                  )
-                }
-              >
-                {citySearchResults.map((item, i) => (
-                  <option key={i} value={item.id}>
-                    {" "}
-                    {item.place_name}{" "}
-                  </option>
-                ))}
-              </select>
-            )}
+            <div className="addReminder__cityBox">
+              <label htmlFor="city" />
+              <input
+                className="addReminder__city"
+                type="text"
+                id="city"
+                value={citySearch}
+                onChange={(e) => {
+                  setCitySearch(e.target.value);
+                }}
+                placeholder="Select a city"
+              />
+              {citySearchResults.length > 0 && (
+                <select
+                  className="addReminder__selectBox"
+                  value={setSelectedCity.id}
+                  onChange={(e) =>
+                    setSelectedCity(
+                      citySearchResults.find(
+                        (item) => item.id === e.target.value
+                      )
+                    )
+                  }
+                >
+                  {citySearchResults.map((item, i) => (
+                    <option key={i} value={item.id}>
+                      {" "}
+                      {item.place_name}{" "}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+
             {weather.temp && (
               <div className="weather">
                 <img
