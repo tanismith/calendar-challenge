@@ -69,7 +69,7 @@ function App() {
                   <button className="dateTimePicker__navButton">
                     <i className="fas fa-chevron-left" />
                   </button>
-                  <h3 className="dateTimePicker__title">Month 2020</h3>
+                  <h3 className="dateTimePicker__title">October 2020</h3>
                   <button className="dateTimePicker__navButton">
                     <i className="fas fa-chevron-right" />
                   </button>

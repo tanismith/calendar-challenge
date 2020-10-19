@@ -100,6 +100,7 @@ export default function ReminderModal({ setShowModal, reminder }) {
       date: date.getTime(),
       color: colorSelected,
       selectedCity,
+
       weather,
     };
     let newReminders;
@@ -203,7 +204,6 @@ export default function ReminderModal({ setShowModal, reminder }) {
                 </select>
               )}
             </div>
-
             {weather.temp && (
               <div className="weather">
                 <img

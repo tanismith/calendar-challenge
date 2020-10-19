@@ -19,7 +19,13 @@ export default function Day({ day }) {
 
   return (
     <div className="dateDayBox">
-      <p className="dateDayTitle">{day.date()}</p>
+      <p
+        className={`dateDayTitle ${
+          day.date() === dayjs().date() ? "active" : ""
+        }`}
+      >
+        {day.date()}
+      </p>
       {reminders.map((item, index) => (
         <Reminder reminder={item} key={index} />
       ))}

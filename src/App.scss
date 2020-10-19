@@ -191,11 +191,18 @@
             height: 100px;
             border: 1px solid var(--gray-color);
             overflow: hidden;
-            .dateDayTitle,
-            .dateDayBox__reminder {
+            .dateDayTitle {
+              color: var(--primary-color);
               font-size: 12px;
               margin: 5px;
-              color: var(--primary-color);
+            }
+            .active {
+              background: rgb(236, 247, 255);
+              width: 15px;
+              height: 15px;
+              margin: 0;
+              padding: 4px;
+              border-radius: 50%;
             }
             .dateDayBox__reminder {
               display: flex;
