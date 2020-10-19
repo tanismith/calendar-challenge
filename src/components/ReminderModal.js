@@ -14,19 +14,7 @@ const weatherApiKey = "fd4dc66b609f4c4ad272de0cb1814d91";
 class CustomInput extends React.Component {
   render() {
     const { value, onClick } = this.props;
-    return (
-      <span
-        style={{
-          border: `1px solid gray`,
-          padding: `1rem`,
-          cursor: "pointer",
-          margin: "5px 0",
-        }}
-        onClick={onClick}
-      >
-        {value}
-      </span>
-    );
+    return <span onClick={onClick}>{value}</span>;
   }
 }
 
@@ -150,31 +138,6 @@ export default function ReminderModal({ setShowModal, reminder }) {
         </div>
 
         <form className="addReminder__contentBox" onSubmit={handleSave}>
-          <div className="addReminder__dateTimeBox">
-            {weather.temp && (
-              <div className="weather">
-                <img
-                  className="weather__image"
-                  style={{ objectFit: "contain" }}
-                  src={
-                    weather &&
-                    weather.weather &&
-                    weather.weather[0] &&
-                    `http://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`
-                  }
-                  alt="weather"
-                />
-                <p className="weather__degrees">{weather.temp || ""} °C</p>
-                {/* <small className="weather__subtitle">No clouds</small> */}
-                <p className="weather__title">
-                  {weather &&
-                    weather.weather &&
-                    weather.weather[0] &&
-                    weather.weather[0].main}
-                </p>
-              </div>
-            )}
-          </div>
           <div className="addReminder__reminderContent">
             <label htmlFor="titlereminder" />
             <input
@@ -194,6 +157,19 @@ export default function ReminderModal({ setShowModal, reminder }) {
               customInput={<CustomInput />}
               dateFormat="MMMM d, yyyy h:mm aa"
             />
+            <div className="colorPickerBar">
+              <p className="colorPickerBar__title">Select a color</p>
+              {colors.map((item, i) => (
+                <span
+                  onClick={() => setColorSelected(item)}
+                  className={`colorPickerBar__color ${
+                    colorSelected === item ? "active" : ""
+                  }`}
+                  key={i}
+                  style={{ backgroundColor: item }}
+                />
+              ))}
+            </div>
             <label htmlFor="city" />
             <input
               className="addReminder__city"
@@ -203,10 +179,11 @@ export default function ReminderModal({ setShowModal, reminder }) {
               onChange={(e) => {
                 setCitySearch(e.target.value);
               }}
-              placeholder="Choose city"
+              placeholder="Select a city"
             />
             {citySearchResults.length > 0 && (
               <select
+                className="addReminder__selectBox"
                 value={setSelectedCity.id}
                 onChange={(e) =>
                   setSelectedCity(
@@ -222,21 +199,29 @@ export default function ReminderModal({ setShowModal, reminder }) {
                 ))}
               </select>
             )}
-
-            <div className="colorPickerBar">
-              <p className="colorPickerBar__title">Select a color</p>
-              {colors.map((item, i) => (
-                <span
-                  onClick={() => setColorSelected(item)}
-                  className={`colorPickerBar__color ${
-                    colorSelected === item ? "active" : ""
-                  }`}
-                  key={i}
-                  style={{ backgroundColor: item }}
+            {weather.temp && (
+              <div className="weather">
+                <img
+                  className="weather__image"
+                  src={
+                    weather &&
+                    weather.weather &&
+                    weather.weather[0] &&
+                    `http://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`
+                  }
+                  alt="weather"
                 />
-              ))}
-            </div>
+                <p className="weather__degrees">{weather.temp || ""} °C</p>
+                <p className="weather__title">
+                  {weather &&
+                    weather.weather &&
+                    weather.weather[0] &&
+                    weather.weather[0].main}
+                </p>
+              </div>
+            )}
           </div>
+
           <button type="submit" className="addReminder__saveButton">
             Save Reminder
           </button>

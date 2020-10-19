@@ -26,7 +26,6 @@ export default function Sidebar() {
         alt="reminders-ilustration"
       />
       <div className="sideBar__colorsBox">
-        <h2 className="sideBar__title">Welcome!</h2>
         <h2 className="sideBar__title">Filter by:</h2>
         <div
           onClick={() => handleFilter("all")}
@@ -39,7 +38,7 @@ export default function Sidebar() {
             cursor: "pointer",
           }}
         >
-          ALL
+          Show me all
         </div>
         <span className="sideBar__boxForColors">
           {uniqueColors.map((item, i) => (
