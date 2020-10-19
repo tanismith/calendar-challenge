@@ -260,12 +260,12 @@
       width: 100%;
       height: auto;
       margin: 10px 0;
-      display: grid;
-      grid-template: 1fr / 1fr 2fr;
+      display: flex;
+      //   grid-template: 1fr / 1fr 2fr;
       align-items: center;
 
       .addReminder__dateTimeBox {
-        grid-column: 1;
+        // grid-column: 1;
         display: flex;
         flex-flow: column nowrap;
         width: 100%;
@@ -276,7 +276,7 @@
           margin: 1em 0;
           border: none;
           border-bottom: 1px solid var(--gray-color);
-          width: 90%;
+          width: 70%;
           height: 60px;
           outline: none;
           padding: 1em;
@@ -329,8 +329,6 @@
           border: none;
           outline: none;
           border-bottom: 1px solid var(--gray-color);
-          margin: 0.5em 0;
-          padding: 1em;
           font-family: var(--texts-font);
           font-size: 16px;
           &:focus {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./App.scss";
 import Day from "./components/Day";
 import CalendarHeader from "./components/CalendarHeader";
@@ -6,7 +6,7 @@ import ReminderModal from "./components/ReminderModal";
 import dayjs from "dayjs";
 import Sidebar from "./components/Sidebar";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-
+import { GlobalContext } from "./context";
 dayjs.extend(customParseFormat);
 
 function getDays() {
@@ -44,6 +44,13 @@ function App() {
   const days = getDays();
 
   const [showModal, setShowModal] = useState(false);
+  const { reminderToEdit } = useContext(GlobalContext);
+
+  useEffect(() => {
+    if (reminderToEdit.id) {
+      setShowModal(true);
+    }
+  }, [reminderToEdit]);
 
   return (
     <div>
@@ -88,7 +95,12 @@ function App() {
           </section>
         </main>
       </div>
-      {showModal && <ReminderModal setShowModal={setShowModal} />}
+      {showModal && (
+        <ReminderModal
+          setShowModal={setShowModal}
+          reminder={reminderToEdit.id ? reminderToEdit : {}}
+        />
+      )}
     </div>
   );
 }
