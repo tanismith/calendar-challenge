@@ -130,6 +130,14 @@ export default function ReminderModal({ setShowModal, reminder }) {
     handleClose();
   }
 
+  function handleDelete() {
+    const remindersLeft = reminders.filter((item) => item.id !== reminder.id);
+    setReminders(remindersLeft);
+    localStorage.setItem("reminders", JSON.stringify(remindersLeft));
+    setFilteredReminders(remindersLeft);
+    handleClose();
+  }
+
   //Closing the modal: two states, to edit an existing one or for a new one.
   function handleClose() {
     setReminderToEdit({});
@@ -156,9 +164,9 @@ export default function ReminderModal({ setShowModal, reminder }) {
           <h2 className="addReminder__titleOfBox">Remind me</h2>
           <div>
             {reminder.id && (
-              <a className="deleteReminder">
+              <button className="deleteReminder" onClick={handleDelete}>
                 <i className="fas fa-trash" />
-              </a>
+              </button>
             )}
             <button className="addReminder__closeButton" onClick={handleClose}>
               <i className="fas fa-times" />
