@@ -11,7 +11,6 @@ export const GlobalContext = React.createContext({
 
 export function GlobalContextProvider(props) {
   const localReminders = localStorage.getItem("reminders");
-
   const [reminders, setReminders] = useState(
     localReminders ? JSON.parse(localReminders) : []
   );

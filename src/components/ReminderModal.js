@@ -8,9 +8,9 @@ import { v4 as uuidv4 } from "uuid";
 const colors = ["#6a097d", "#c060a1", "#5c969e", "#3d7ea6"];
 const mapBoxAPIKEY =
   "pk.eyJ1IjoidGFuaWEtc21pdGgiLCJhIjoiY2tnZm5sbW9iMGQydTJ6b2JrbHdvMmR2eSJ9.aus8exVibUBXqs5XdXS8Vw";
-
 const weatherApiKey = "fd4dc66b609f4c4ad272de0cb1814d91";
 
+// Defining customized Input for Selecting date and time from React Datepicker
 class CustomInput extends React.Component {
   render() {
     const { value, onClick } = this.props;
@@ -41,6 +41,7 @@ export default function ReminderModal({ setShowModal, reminder }) {
     setReminderToEdit,
   } = useContext(GlobalContext);
 
+  // Asking for API response after waiting the user to finish typing the whole city name.
   useEffect(() => {
     const timeOutId = setTimeout(async () => {
       if (citySearch) {
@@ -55,6 +56,7 @@ export default function ReminderModal({ setShowModal, reminder }) {
     return () => clearTimeout(timeOutId);
   }, [citySearch]);
 
+  // Asking API response for weather data based on the coordinates of the city selected by the user
   useEffect(() => {
     async function fetchData() {
       if (selectedCity.center) {
@@ -69,6 +71,9 @@ export default function ReminderModal({ setShowModal, reminder }) {
     fetchData();
   }, [selectedCity]);
 
+  //Selecting the closest weather object based on the date and time (timestamp format).
+  //Here an array is used to gathering all results from the API.
+  //The date from API was transformed in milliseconds to be compare with current time.
   useEffect(() => {
     if (weatherResult.current) {
       const allWeathers = [
@@ -92,15 +97,17 @@ export default function ReminderModal({ setShowModal, reminder }) {
     }
   }, [date, weatherResult]);
 
+  //The below function allows to save the values of props selected and entered in a new reminder or and existing one
+  //To save a reminder edited by the user, the function finds the ID and a new array its created
+  // by taking the old reminders and the new one to save.
   function handleSave(e) {
-    e.preventDefault();
+    e.preventDefault(); //of submit form
     const reminderToSave = {
       id: reminder.id || uuidv4(),
       title,
       date: date.getTime(),
       color: colorSelected,
       selectedCity,
-
       weather,
     };
     let newReminders;
@@ -123,9 +130,23 @@ export default function ReminderModal({ setShowModal, reminder }) {
     handleClose();
   }
 
+  //Closing the modal: two states, to edit an existing one or for a new one.
   function handleClose() {
     setReminderToEdit({});
     setShowModal(false);
+  }
+
+  // Function to pass a valid prop to React component when displaying the temperature.
+  // Weather API response has 'temp' as property and sometimes as object.
+  // Here the function choose only the prop to be passed.
+  function displayTemp(weather) {
+    if (weather.temp.day) {
+      return weather.temp.day;
+    } else if (weather.temp) {
+      return weather.temp;
+    } else {
+      return "";
+    }
   }
 
   return (
@@ -133,9 +154,16 @@ export default function ReminderModal({ setShowModal, reminder }) {
       <div className="addReminder">
         <div className="addReminder__closeBar">
           <h2 className="addReminder__titleOfBox">Remind me</h2>
-          <button className="addReminder__closeButton" onClick={handleClose}>
-            <i className="fas fa-times" />
-          </button>
+          <div>
+            {reminder.id && (
+              <a className="deleteReminder">
+                <i className="fas fa-trash" />
+              </a>
+            )}
+            <button className="addReminder__closeButton" onClick={handleClose}>
+              <i className="fas fa-times" />
+            </button>
+          </div>
         </div>
 
         <form onSubmit={handleSave}>
@@ -151,13 +179,17 @@ export default function ReminderModal({ setShowModal, reminder }) {
               required
               onChange={(e) => setTitle(e.target.value)}
             />
+
+            {/* Date and hour user picker*/}
             <DatePicker
               showTimeInput
               selected={date}
-              onChange={(date) => setDate(date)}
+              onChange={(date) => setDate(date)} //React re-render the component with the new date
               customInput={<CustomInput />}
               dateFormat="MMMM d, yyyy h:mm aa"
             />
+
+            {/* Selecting the color for the reminder */}
             <div className="colorPickerBar">
               <p className="colorPickerBar__title">Select a color</p>
               {colors.map((item, i) => (
@@ -171,6 +203,8 @@ export default function ReminderModal({ setShowModal, reminder }) {
                 />
               ))}
             </div>
+
+            {/* Searching the city and showing options to choose one */}
             <div className="addReminder__cityBox">
               <label htmlFor="city" />
               <input
@@ -204,6 +238,8 @@ export default function ReminderModal({ setShowModal, reminder }) {
                 </select>
               )}
             </div>
+
+            {/* Showing the weather temperature with icon and title */}
             {weather.temp && (
               <div className="weather">
                 <img
@@ -216,7 +252,7 @@ export default function ReminderModal({ setShowModal, reminder }) {
                   }
                   alt="weather"
                 />
-                <p className="weather__degrees">{weather.temp || ""} °C</p>
+                <p className="weather__degrees">{displayTemp(weather)} °C</p>
                 <p className="weather__title">
                   {weather &&
                     weather.weather &&
@@ -227,6 +263,7 @@ export default function ReminderModal({ setShowModal, reminder }) {
             )}
           </div>
 
+          {/* Submitting the reminder with all info that will be saved on local storage */}
           <button type="submit" className="addReminder__saveButton">
             Save Reminder
           </button>

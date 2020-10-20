@@ -3,12 +3,13 @@ import "./App.scss";
 import Day from "./components/Day";
 import CalendarHeader from "./components/CalendarHeader";
 import ReminderModal from "./components/ReminderModal";
-import dayjs from "dayjs";
 import Sidebar from "./components/Sidebar";
-import customParseFormat from "dayjs/plugin/customParseFormat";
 import { GlobalContext } from "./context";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 
+//Getting the days of the whole month
 function getDays() {
   const month = dayjs().month() + 1;
   const year = dayjs().year();
@@ -40,9 +41,9 @@ function getDays() {
   return days;
 }
 
-function App() {
+export default function App() {
   const days = getDays();
-
+  const monthOfYear = dayjs();
   const [showModal, setShowModal] = useState(false);
   const { reminderToEdit } = useContext(GlobalContext);
 
@@ -69,7 +70,9 @@ function App() {
                   <button className="dateTimePicker__navButton">
                     <i className="fas fa-chevron-left" />
                   </button>
-                  <h3 className="dateTimePicker__title">October 2020</h3>
+                  <h3 className="dateTimePicker__title">
+                    {monthOfYear.format("MMMM YYYY")}
+                  </h3>
                   <button className="dateTimePicker__navButton">
                     <i className="fas fa-chevron-right" />
                   </button>
@@ -104,5 +107,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
