@@ -31,6 +31,8 @@ Reminder's list Modal to manage overflow of reminders in a day. It allows to edi
 
 ### ✅You can preview the live project here:
 
+https://reminders-calendar.netlify.app/(https://reminders-calendar.netlify.app/)
+
 ## Installation and Setup Instructions
 
 ---
