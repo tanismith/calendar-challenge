@@ -1,15 +1,11 @@
 ## The challenge
 
----
-
 ✨Create a demo calendar application using React, Vue or Angular.
 The app should allow the user to add a new "reminder" (max 30 chars) for a user entered day and time, also select color when creating a reminder and display it appropriately. The user can add a city that allows to get the weather forecast.
 
 The created reminders must display on the calendar view in the correct time order, they should be able to be edited. Finally apply test functionality to add a new "reminder" entered day, time and city.
 
 ## The solution
-
----
 
 Reminders Calendar 👍
 
@@ -31,11 +27,9 @@ Reminder's list Modal to manage overflow of reminders in a day. It allows to edi
 
 ### ✅You can preview the live project here:
 
-https://reminders-calendar.netlify.app/(https://reminders-calendar.netlify.app/)
+https://reminders-calendar.netlify.app/
 
 ## Installation and Setup Instructions
-
----
 
 Clone down this repository. You will need `node` and `yarn` or `npm`i nstalled globally on your machine.
 
@@ -57,8 +51,6 @@ To Visit App:
 
 ## Technologies Used
 
----
-
 The technologies implemented in this project are React, React Context, JavaScript
 
 I choose to use `create-react-app` boilerplate to minimize initial setup.
@@ -71,8 +63,6 @@ Another small library used was [react-datepicker](https://reactdatepicker.com/) 
 [OpenWeather API](https://openweathermap.org/) and [Mapbox Geocoding API](https://www.mapbox.com/) to get the weather forecast and the coordinates most approximate coordinates to the city selected by the user.
 
 ## Challenges
-
----
 
 This was a 5 day challenge project.
 
