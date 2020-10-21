@@ -37,6 +37,8 @@ export default function RemindersModal() {
   }
 
   return (
+    <div className="listOfRemindersModal">
+
     <div className="dayBox">
       <div className="dayBox__controlsBar">
         <h2 className="dayBox__titleOfBox">
@@ -73,6 +75,7 @@ export default function RemindersModal() {
       <button className="dayBox__deleteAllButton" onClick={handleDeleteAll}>
         <i className="fas fa-trash" /> Delete all
       </button>
+    </div>
     </div>
   );
 }
