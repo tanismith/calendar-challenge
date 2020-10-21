@@ -21,13 +21,25 @@ export default function Day({ day }) {
 
   return (
     <div className="dateDayBox">
-      <p
-        className={`dateDayTitle ${
-          day.date() === dayjs().date() ? "active" : ""
-        }`}
-      >
-        {day.date()}
-      </p>
+      <div className="dateDayBox__header">
+        <p
+          className={`dateDayTitle ${
+            day.date() === dayjs().date() ? "active" : ""
+          }`}
+        >
+          {day.date()}
+        </p>
+        {reminders.length > 0 && (
+          <button
+            className="listOfReminders"
+            onClick={() => {
+              context.setRemindersList(reminders);
+            }}
+          >
+            ...
+          </button>
+        )}
+      </div>
       {reminders.map((item, index) => (
         <Reminder reminder={item} key={index} />
       ))}

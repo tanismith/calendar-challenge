@@ -14,7 +14,9 @@ const weatherApiKey = "fd4dc66b609f4c4ad272de0cb1814d91";
 class CustomInput extends React.Component {
   render() {
     const { value, onClick } = this.props;
-    return <span onClick={onClick}>{value}</span>;
+    return (
+      <input aria-label="dateInput" readOnly onClick={onClick} value={value} />
+    );
   }
 }
 
@@ -99,7 +101,7 @@ export default function ReminderModal({ setShowModal, reminder }) {
 
   //The below function allows to save the values of props selected and entered in a new reminder or and existing one
   //To save a reminder edited by the user, the function finds the ID and a new array its created
-  // by taking the old reminders and the new one to save.
+  // by filtering.
   function handleSave(e) {
     e.preventDefault(); //of submit form
     const reminderToSave = {
@@ -112,12 +114,8 @@ export default function ReminderModal({ setShowModal, reminder }) {
     };
     let newReminders;
     if (reminder.id) {
-      const reminderToReplaceIndex = reminders.findIndex(
-        (item) => item.id === reminder.id
-      );
       newReminders = [
-        ...reminders.slice(0, reminderToReplaceIndex),
-        ...reminders.slice(reminderToReplaceIndex + 1, -1),
+        ...reminders.filter((item) => item.id !== reminder.id),
         reminderToSave,
       ];
     } else {
@@ -129,7 +127,7 @@ export default function ReminderModal({ setShowModal, reminder }) {
     setFilteredReminders(newReminders);
     handleClose();
   }
-
+  //Deleting the reminder by filtering from the reminders array
   function handleDelete() {
     const remindersLeft = reminders.filter((item) => item.id !== reminder.id);
     setReminders(remindersLeft);
@@ -158,7 +156,7 @@ export default function ReminderModal({ setShowModal, reminder }) {
   }
 
   return (
-    <div className="modal">
+    <div className="modal" aria-label="reminder-modal">
       <div className="addReminder">
         <div className="addReminder__closeBar">
           <h2 className="addReminder__titleOfBox">Remind me</h2>
@@ -174,10 +172,11 @@ export default function ReminderModal({ setShowModal, reminder }) {
           </div>
         </div>
 
-        <form onSubmit={handleSave}>
+        <form onSubmit={handleSave} aria-label="reminderForm">
           <div className="addReminder__reminderContent">
             <label htmlFor="titlereminder" />
             <input
+              aria-label="titlereminder"
               className="addReminder__title"
               id="titlereminder"
               type="text"
@@ -195,6 +194,8 @@ export default function ReminderModal({ setShowModal, reminder }) {
               onChange={(date) => setDate(date)} //React re-render the component with the new date
               customInput={<CustomInput />}
               dateFormat="MMMM d, yyyy h:mm aa"
+              minDate={new Date()}
+              maxDate={new Date(dayjs().endOf("month").valueOf())}
             />
 
             {/* Selecting the color for the reminder */}
@@ -216,6 +217,7 @@ export default function ReminderModal({ setShowModal, reminder }) {
             <div className="addReminder__cityBox">
               <label htmlFor="city" />
               <input
+                aria-label="cityInput"
                 className="addReminder__city"
                 type="text"
                 id="city"
@@ -272,7 +274,11 @@ export default function ReminderModal({ setShowModal, reminder }) {
           </div>
 
           {/* Submitting the reminder with all info that will be saved on local storage */}
-          <button type="submit" className="addReminder__saveButton">
+          <button
+            type="submit"
+            className="addReminder__saveButton"
+            aria-label="submitReminder"
+          >
             Save Reminder
           </button>
         </form>

@@ -191,19 +191,30 @@
             height: 100px;
             border: 1px solid var(--gray-color);
             overflow: hidden;
-            .dateDayTitle {
-              color: var(--primary-color);
-              font-size: 12px;
-              margin: 5px;
+            .dateDayBox__header {
+              display: flex;
+              justify-content: space-between;
+              .dateDayTitle {
+                color: var(--primary-color);
+                font-size: 12px;
+                margin: 5px;
+              }
+              .active {
+                background: rgb(236, 247, 255);
+                width: 15px;
+                height: 15px;
+                margin: 0;
+                padding: 4px;
+                border-radius: 50%;
+              }
+              .listOfReminders {
+                border: none;
+                width: 20%;
+                height: 15%;
+                cursor: pointer;
+              }
             }
-            .active {
-              background: rgb(236, 247, 255);
-              width: 15px;
-              height: 15px;
-              margin: 0;
-              padding: 4px;
-              border-radius: 50%;
-            }
+
             .dateDayBox__reminder {
               width: 95%;
               display: flex;
@@ -411,7 +422,6 @@
 }
 //Styles for box of list of reminders in a day
 .dayBox {
-  display: none;
   background: white;
   width: 500px;
   height: auto;

@@ -5,6 +5,7 @@ import CalendarHeader from "./components/CalendarHeader";
 import ReminderModal from "./components/ReminderModal";
 import Sidebar from "./components/Sidebar";
 import { GlobalContext } from "./context";
+import RemindersModal from "./components/RemindersModal";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
@@ -43,9 +44,9 @@ function getDays() {
 
 export default function App() {
   const days = getDays();
-  const monthOfYear = dayjs();
   const [showModal, setShowModal] = useState(false);
-  const { reminderToEdit } = useContext(GlobalContext);
+  const [showRemindersModal, setShowRemindersModal] = useState(false);
+  const { reminderToEdit, remindersList } = useContext(GlobalContext);
 
   useEffect(() => {
     if (reminderToEdit.id) {
@@ -53,9 +54,16 @@ export default function App() {
     }
   }, [reminderToEdit]);
 
+  useEffect(() => {
+    if (remindersList.length > 0) {
+      setShowRemindersModal(true);
+    } else {
+      setShowRemindersModal(false);
+    }
+  }, [remindersList]);
+
   return (
     <div>
-      {/* Main screen- view of calendar */}
       <div className="appContainer">
         <header className="welcomeBar">
           <h1 className="welcomeBar__title">Check your running reminders</h1>
@@ -66,17 +74,10 @@ export default function App() {
             <div className="controlsBar">
               <h3 className="controlsBar__title">Reminders calendar</h3>
               <div className="controlsBar__buttonsBox">
-                <div className="dateTimePicker">
-                  <button className="dateTimePicker__navButton">
-                    <i className="fas fa-chevron-left" />
-                  </button>
-                  <h3 className="dateTimePicker__title">
-                    {monthOfYear.format("MMMM YYYY")}
-                  </h3>
-                  <button className="dateTimePicker__navButton">
-                    <i className="fas fa-chevron-right" />
-                  </button>
-                </div>
+                <h3 className="dateTimePicker__title">
+                  {dayjs().format("MMMM YYYY")}
+                </h3>
+
                 <button
                   className="newReminderButton"
                   onClick={() => setShowModal(true)}
@@ -104,6 +105,7 @@ export default function App() {
           reminder={reminderToEdit.id ? reminderToEdit : {}}
         />
       )}
+      {showRemindersModal && <RemindersModal />}
     </div>
   );
 }

@@ -7,6 +7,8 @@ export const GlobalContext = React.createContext({
   setFilteredReminders: () => {},
   reminderToEdit: {},
   setReminderToEdit: () => {},
+  remindersList: [],
+  setRemindersList: () => {},
 });
 
 export function GlobalContextProvider(props) {
@@ -16,6 +18,7 @@ export function GlobalContextProvider(props) {
   );
   const [filteredReminders, setFilteredReminders] = useState(reminders);
   const [reminderToEdit, setReminderToEdit] = useState({});
+  const [remindersList, setRemindersList] = useState({});
 
   return (
     <GlobalContext.Provider
@@ -26,6 +29,8 @@ export function GlobalContextProvider(props) {
         setFilteredReminders,
         reminderToEdit,
         setReminderToEdit,
+        remindersList,
+        setRemindersList,
       }}
     >
       {props.children}
