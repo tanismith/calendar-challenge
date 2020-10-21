@@ -57,12 +57,15 @@ export default function RemindersModal() {
               <p className="descriptionReminder">{item.title}</p>
             </div>
             <div>
-              <a className="editReminder" onClick={() => handleEdit(item)}>
+              <button className="editReminder" onClick={() => handleEdit(item)}>
                 <i className="fas fa-edit" />
-              </a>
-              <a className="deleteReminder" onClick={() => handleDelete(item)}>
+              </button>
+              <button
+                className="deleteReminder"
+                onClick={() => handleDelete(item)}
+              >
                 <i className="fas fa-trash" />
-              </a>
+              </button>
             </div>
           </div>
         ))}

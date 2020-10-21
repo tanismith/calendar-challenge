@@ -15,7 +15,13 @@ class CustomInput extends React.Component {
   render() {
     const { value, onClick } = this.props;
     return (
-      <input aria-label="dateInput" readOnly onClick={onClick} value={value} />
+      <input
+        className="react-datepicker__input-container"
+        aria-label="dateInput"
+        readOnly
+        onClick={onClick}
+        value={value}
+      />
     );
   }
 }
@@ -99,11 +105,11 @@ export default function ReminderModal({ setShowModal, reminder }) {
     }
   }, [date, weatherResult]);
 
-  //The below function allows to save the values of props selected and entered in a new reminder or and existing one
+  //The function allows to save the values of props selected and entered in a new reminder or and existing one
   //To save a reminder edited by the user, the function finds the ID and a new array its created
   // by filtering.
   function handleSave(e) {
-    e.preventDefault(); //of submit form
+    e.preventDefault();
     const reminderToSave = {
       id: reminder.id || uuidv4(),
       title,

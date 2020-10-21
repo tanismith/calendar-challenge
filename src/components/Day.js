@@ -36,7 +36,7 @@ export default function Day({ day }) {
               context.setRemindersList(reminders);
             }}
           >
-            ...
+            <i className="fas fa-ellipsis-v"></i>
           </button>
         )}
       </div>
