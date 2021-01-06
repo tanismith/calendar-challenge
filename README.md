@@ -57,8 +57,6 @@ Another small library used was [react-datepicker](https://reactdatepicker.com/) 
 
 ## Challenges
 
-This was a 5 day challenge project.
-
-One of the main challenges I ran into was using context to manage states and testing, this lead me to spend a few days on a research, at the end using React Context and Hooks to manage states made it easier to implement.
+I ran into was using context to manage states and testing, this lead me to spend a few days on a research, at the end using React Context and Hooks to manage states made it easier to implement.
 
 The other challenge was implementing tests, to accomplish this I tried using integration testing because of a better coverage of the functionality.
