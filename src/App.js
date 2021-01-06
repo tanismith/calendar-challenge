@@ -15,16 +15,16 @@ function getDays() {
   const month = dayjs().month() + 1;
   const year = dayjs().year();
   const daysInMonth = dayjs().daysInMonth();
-  const firstDayOfTheMonth = dayjs(`${month}-01-${year}`, "MM-D-YYYY").day();
+  const firstDayOfTheMonth = dayjs(`${month}-01-${year}`, "M-D-YYYY").day();
   const lastDayOfTheMonth = dayjs(
     `${month}-${daysInMonth}-${year}`,
-    "MM-D-YYYY"
+    "M-D-YYYY"
   ).day();
 
   let days = [];
 
   for (let i = 0; i < daysInMonth; i++) {
-    const date = dayjs(`${month}-${i + 1}-${year}`, "MM-D-YYYY");
+    const date = dayjs(`${month}-${i + 1}-${year}`, "M-D-YYYY");
     days.push(date);
   }
 
