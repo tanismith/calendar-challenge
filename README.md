@@ -4,7 +4,7 @@ Reminders Calendar 👍
 
 A calendar web application to keep reminders built with React.
 
-The project is totally focused on front-end and complies mandatory features mentioned above. It has the functionality to delete one or all the reminders for an specific day.
+The project is totally focused on front-end. It has the functionality to delete one or all the reminders for an specific day.
 
 Calendar view: it shows the reminders displayed properly in the day and sorted by time.
 
